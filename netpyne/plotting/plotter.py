@@ -264,7 +264,7 @@ class MetaFigure:
 
                 fileName = fileName.split(fileNumStr)[0] + '_' + fileNumStrNew + fileExt
 
-        self.fig.savefig(fileName)
+        self.fig.savefig(fileName, dpi=300)
         self.fileName = fileName
 
         return fileName
