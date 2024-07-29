@@ -44,7 +44,8 @@ def plotShape(
     showElectrodes=False,
     synStyle='.',
     synSize=3,
-    synColor='tomato',
+    synColorE='tomato',
+    synColorI='tomato',
     dist=0.6,
     elev=90,
     azim=-90,
@@ -255,8 +256,10 @@ def plotShape(
             for cellPost in cellsPost:
                 for sec in list(cellPost.secs.values()):
                     for synMech in sec['synMechs']:
+                        synColor = synColorI if 'GABA' in synMech['label'] else synColorE
+                        zorder = 12 if 'GABA' in synMech['label'] else 11
                         morph.mark_locations(
-                            h, sec['hObj'], synMech['loc'], markspec=synStyle, color=synColor, markersize=synSize
+                            h, sec['hObj'], synMech['loc'], markspec=synStyle, color=synColor, markersize=synSize, alpha=0.6, zorder=zorder
                         )
 
         # Electrodes
