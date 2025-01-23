@@ -27,6 +27,7 @@ from netpyne import __gui__
 
 if __gui__:
     import matplotlib.pyplot as plt
+    import matplotlib as mpl
 import numpy as np
 from numbers import Number
 from math import ceil
@@ -44,8 +45,9 @@ def plotShape(
     showElectrodes=False,
     synStyle='.',
     synSize=3,
-    synColorE='tomato',
-    synColorI='tomato',
+    secSynColors=None,
+    # synColorE='tomato',
+    # synColorI='tomato',
     dist=0.6,
     elev=90,
     azim=-90,
@@ -58,6 +60,7 @@ def plotShape(
     bkgColor=None,
     aspect='auto',
     axisLabels=False,
+    includeGrid=True,
     kind='shape',
     returnPlotter=False,
     **kwargs
@@ -253,14 +256,29 @@ def plotShape(
         # Synapses
         if showSyns:
             # synColor = 'cyan'
+            synSecCount = 0
+            synSecList = []
+
             for cellPost in cellsPost:
-                for sec in list(cellPost.secs.values()):
+                for sec_name, sec in cellPost.secs.items():  # list(cellPost.secs.values()):
                     for synMech in sec['synMechs']:
-                        synColor = synColorI if 'GABA' in synMech['label'] else synColorE
-                        zorder = 12 if 'GABA' in synMech['label'] else 11
+                        synSecList.append(sec_name)
+
+                        if 'GABA' in synMech['label']:
+                            synColor = secSynColors[sec_name]['I']
+                            # synColor = colormaps[1][synSecCount] if colormaps[1] is not None else synColors[1]
+                            zorder = 12
+
+                        else:
+                            synColor = secSynColors[sec_name]['E']
+                            # synColor = colormaps[0][synSecCount] if colormaps[0] is not None else synColors[0]
+                            zorder = 11
+
                         morph.mark_locations(
-                            h, sec['hObj'], synMech['loc'], markspec=synStyle, color=synColor, markersize=synSize, alpha=0.6, zorder=zorder
+                            h, sec['hObj'], synMech['loc'], markspec=synStyle, color=synColor, markersize=synSize, alpha=1, zorder=zorder
                         )
+                    if bool(sec['synMechs']):
+                        synSecCount += 1
 
         # Electrodes
         if showElectrodes:
@@ -293,6 +311,9 @@ def plotShape(
             shapeax.set_xticklabels([])
             shapeax.set_yticklabels([])
             shapeax.set_zticklabels([])
+
+        if not includeGrid:
+            shapeax.grid(False)
 
         if axis is None:
             metaFig.finishFig(**kwargs)
