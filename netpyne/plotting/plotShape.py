@@ -237,9 +237,9 @@ def plotShape(
                 cb.ax.set_title('Time = ' + str(round(h.t, 1)), fontsize=fontSize)
 
         if bkgColor:
-            shapeax.w_xaxis.set_pane_color(bkgColor)
-            shapeax.w_yaxis.set_pane_color(bkgColor)
-            shapeax.w_zaxis.set_pane_color(bkgColor)
+            shapeax.xaxis.set_pane_color(bkgColor)
+            shapeax.yaxis.set_pane_color(bkgColor)
+            shapeax.zaxis.set_pane_color(bkgColor)
         # shapeax.grid(False)
 
         # Synapses
