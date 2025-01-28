@@ -287,10 +287,10 @@ def plotShape(
                 marker='v',
                 depthshade=False,
                 edgecolors='k',
-                linewidth=2,
+                linewidth=0.5,
             )
-            for i in range(coords.shape[0]):
-                ax.text(coords[i, 0], coords[i, 1], coords[i, 2], '  ' + str(showElectrodes[i]), fontweight='bold')
+            # for i in range(coords.shape[0]):
+            #     ax.text(coords[i, 0], coords[i, 1], coords[i, 2], '  ' + str(showElectrodes[i]), fontweight='bold')
             cb.set_label('Segment total transfer resistance to electrodes (kiloohm)', rotation=90, fontsize=fontSize)
 
         if axisLabels:
