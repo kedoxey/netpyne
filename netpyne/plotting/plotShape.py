@@ -277,12 +277,13 @@ def plotShape(
                 showElectrodes.remove('avg')
                 colorOffset = 1
             coords = sim.net.recXElectrode.pos.T[np.array(showElectrodes).astype(int), :]
+            color_list = colorList*int(np.ceil(len(coords)/len(colorList)))
             ax.scatter(
                 coords[:, 0],
                 coords[:, 1],
                 coords[:, 2],
                 s=150,
-                c=colorList[colorOffset : len(coords) + colorOffset],
+                c=color_list[colorOffset : len(coords) + colorOffset],
                 marker='v',
                 depthshade=False,
                 edgecolors='k',
